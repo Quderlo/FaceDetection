@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Website{% endblock %}</title>
+    <!-- Загрузка CSS файлов -->
+    <link rel="stylesheet" href="{% static 'css/CameraUI.css' %}">
+    <link rel="stylesheet" href="{% static 'css/person.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sighting.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <button onclick="window.location.href='{% url 'index' %}'">На главную</button>
+            <button onclick="window.location.href='{% url 'webcam_page' %}'">Добавить человека</button>
+            <button onclick="window.location.href='{% url 'persons_table' %}'">Люди</button>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Footer content goes here -->
+    </footer>
+    <!-- Загрузка JavaScript файлов -->
+</body>
+</html>

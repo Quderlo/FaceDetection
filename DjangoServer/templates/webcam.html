@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Sighting List
+{% endblock %}
+
+{% block content %}
+    <video autoplay id="videoElement"></video>
+
+    <form id="infoForm">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="surname">Фамилия:</label>
+        <input type="text" id="surname" name="surname"><br><br>
+        <label for="patronymic">Отчество:</label>
+        <input type="text" id="patronymic" name="patronymic"><br><br>
+        <button type="submit">Отправить</button>
+    </form>
+
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('videoElement');
+            const form = document.getElementById('infoForm');
+
+            // Проверяем, поддерживается ли API getUserMedia
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Получаем доступ к веб-камере
+                navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function(error) {
+                    console.error('Ошибка при получении доступа к веб-камере:', error);
+                });
+            }
+            else {
+                console.error('Ваш браузер не поддерживает API getUserMedia');
+            }
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Предотвращаем стандартное поведение формы
+                const first_name = document.getElementById('name').value;
+                const last_name = document.getElementById('surname').value;
+                const patronymic = document.getElementById('patronymic').value;
+
+                // Получаем фото с видео-элемента (без конвертации в base64)
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob(function(blob) {
+                    const formData = new FormData();
+                    formData.append('first_name', first_name);
+                    formData.append('last_name', last_name);
+                    formData.append('patronymic', patronymic);
+                    formData.append('photo', blob, 'photo.jpg'); // Добавляем фото в форму как файл
+
+                    // Отправляем данные на сервер
+                    fetch('{% url 'webcam_page' %}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ошибка при отправке данных на сервер');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        console.log(data); // Выводим сообщение об успешной отправке данных в консоль
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                    });
+                }, 'image/jpeg');
+            });
+        });
+    </script>
+{% endblock %}

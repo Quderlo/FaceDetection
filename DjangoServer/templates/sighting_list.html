@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Sighting List
+{% endblock %}
+
+{% block content %}
+    <ul class="sighting-list">
+        {% for sighting in sightings %}
+        <li class="sighting-item">
+            <div class="sighting-details">
+                <p>{{ sighting.person }} {{ sighting.sighting_time }}</p>
+            </div>
+            {% if sighting.get_image %}
+            <div class="sighting-image">
+                <img src="data:image/jpeg;base64,{{ sighting.get_image }}" alt="Camera Photo">
+            </div>
+            {% else %}
+            <div class="no-photo">
+                <p>No photo available</p>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

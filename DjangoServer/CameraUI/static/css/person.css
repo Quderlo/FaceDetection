@@ -1,0 +1,68 @@
+.search-form {
+    margin-bottom: 20px; /* Отступ снизу формы */
+}
+
+/* Стили для текстового поля поиска */
+.search-form input[type="text"] {
+    padding: 10px; /* Отступы внутри текстового поля */
+    width: 200px; /* Ширина текстового поля */
+    border: 1px solid #ccc; /* Границы текстового поля */
+    border-radius: 5px; /* Закругление углов */
+    font-size: 16px; /* Размер шрифта */
+}
+
+/* Стили для кнопки поиска */
+.search-form button {
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    background-color: #4CAF50; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем границы кнопки */
+    border-radius: 5px; /* Закругление углов кнопки */
+    cursor: pointer; /* Изменяем курсор при наведении на кнопку */
+    font-size: 16px; /* Размер шрифта */
+}
+
+/* Стили для кнопки поиска при наведении */
+.search-form button:hover {
+    background-color: #45a049; /* Цвет фона кнопки при наведении */
+}
+/* Стили для списка персон */
+.persons-list {
+    padding: 0;
+    list-style: none;
+}
+
+/* Стили для каждой персоны */
+.person-item {
+    margin-bottom: 20px;
+}
+
+/* Стили для информации о персоне */
+.person-info {
+    display: flex;
+    align-items: center;
+}
+
+/* Стили для фотографии персоны */
+.person-photo img {
+    width: 100px; /* Установите ширину и высоту фотографии по вашему усмотрению */
+    height: 100px;
+    margin-right: 20px; /* Отступ справа */
+}
+
+/* Стили для имени персоны */
+.person-name {
+    font-weight: bold;
+}
+
+/* Стили для ссылки "View Sightings" */
+.view-sightings {
+    color: blue;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+/* Стили для ссылки "View Sightings" при наведении */
+.view-sightings:hover {
+    color: red;
+}

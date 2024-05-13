@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Persons List
+{% endblock %}
+
+{% block content %}
+    <h1>Persons List</h1>
+    <form action="{% url 'persons_table' %}" method="GET" class="search-form">
+        <input type="text" name="query" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>
+    <ul class="persons-list">
+    {% for person in persons %}
+        <li class="person-item">
+            <div class="person-info">
+                <div class="person-photo">
+                    <img src="data:image/jpeg;base64,{{ person.get_image }}" alt="{{ person }}" class="photo">
+                </div>
+                <div class="person-details">
+                    <span class="person-name">{{ person }}</span>
+                    <a href="{% url 'sighting_list' person.id %}" class="view-sightings">Просмотреть записи</a>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -5,16 +5,16 @@ import numpy as np
 from telegram import Bot
 
 import project_settings as p_settings
-import telegram_settings as t_settings
-from data_Base_Connect import connection
+import secret_settings as s_settings
+from data_base_connect import connection
 import cv2
 from datetime import datetime, timedelta
 
 
 class Telegram_bot:
     def __init__(self):
-        self.bot = Bot(token=t_settings.bot_token)
-        self.chats_id = t_settings.user_chat_id
+        self.bot = Bot(token=s_settings.bot_token)
+        self.chats_id = s_settings.user_chat_id
 
     async def send_data(self, image, photo, message):
         try:

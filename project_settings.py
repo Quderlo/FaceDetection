@@ -1,5 +1,6 @@
 import os
 import dlib
+from secret_settings import rtsp_path
 
 # Подключение моделей
 MODEL_DIR = os.path.join(os.path.dirname(__file__), 'models')
@@ -16,5 +17,5 @@ cutting_accuracy = 10
 timeout = 30  # Время которое мы будем ждать чтобы отправить фотографию человека заново
 
 # rstp настройки
-rtsp = True
-rtsp_path = "rtsp://student:s2024_645@10.2.94.200:554/cam/realmonitor?channel=1&subtype=0"
+rtsp = False
+rtsp_paths = rtsp_path

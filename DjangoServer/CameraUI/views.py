@@ -5,29 +5,38 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import project_settings as p_settings
 from .models import Person, Sighting
-
-def persons_table_view(request):
-    query = request.GET.get('query')
-    if query:
-        persons = Person.objects.filter(
-            Q(first_name__icontains=query) | Q(last_name__icontains=query)
-        )
-    else:
-        persons = Person.objects.all()
-    return render(request, 'persons_table.html', {'persons': persons})
+from django.views import View
 
 
-def sighting_list_view(request, person_id):
-    sightings = Sighting.objects.filter(person_id=person_id).order_by('sighting_time')
-    return render(request, 'sighting_list.html', {'sightings': sightings})
+class PersonsTableView(View):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('query')
+        if query:
+            persons = Person.objects.filter(
+                Q(first_name__icontains=query) | Q(last_name__icontains=query)
+            )
+        else:
+            persons = Person.objects.all()
+        return render(request, 'persons_table.html', {'persons': persons})
 
 
-def main(request):
-    return render(request, 'index.html')
+class SightingListView(View):
+    def get(self, request, person_id):
+        sightings = Sighting.objects.filter(person_id=person_id).order_by('sighting_time')
+        return render(request, 'sighting_list.html', {'sightings': sightings})
 
 
-def webcam_page(request):
-    if request.method == 'POST':
+class MainView(View):
+    def get(self, request):
+        return render(request, 'index.html')
+
+
+class WebcamPageView(View):
+    def get(self, request):
+        # Отображаем страницу, если запрос не методом POST
+        return render(request, 'webcam.html')
+
+    def post(self, request):
         # Получаем данные из POST запроса
         last_name = request.POST.get('last_name', '')
         first_name = request.POST.get('first_name', '')
@@ -60,7 +69,3 @@ def webcam_page(request):
 
         # Перенаправляем на другую страницу или выводим сообщение об успешном сохранении
         return HttpResponse('Данные успешно сохранены!')
-
-    else:
-        # Если запрос не методом POST, просто отображаем страницу
-        return render(request, 'webcam.html')

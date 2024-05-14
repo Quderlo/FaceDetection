@@ -1,5 +1,5 @@
 .idea/
 __pycache__/
-telegram_settings.py
+secret_settings.py
 venv/
 DjangoServer/CameraUI/migrations/

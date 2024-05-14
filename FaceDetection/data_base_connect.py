@@ -1,12 +1,13 @@
 import psycopg2
+import secret_settings
 
 try:
     connection = psycopg2.connect(
-        host='localhost',
-        port='5432',
-        database='technoparkData',
-        user='postgres',
-        password='123',
+        host=secret_settings.HOST_DB,
+        port=secret_settings.PORT_DB,
+        database=secret_settings.NAME_DB,
+        user=secret_settings.USER_DB,
+        password=secret_settings.PASSWORD_DB,
     )
 except psycopg2.Error as ex:
     print(f"Error: {ex}. While connecting to Database or Database not exist.")
